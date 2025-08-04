@@ -21,15 +21,26 @@ CREATE TABLE IF NOT EXISTS photoprofil (
     FOREIGN KEY (idutilisateur) REFERENCES utilisateur(idutilisateur)
 );
 
+-- TYPEPOSTE
+CREATE TABLE IF NOT EXISTS typeposte (
+    idtypeposte SERIAL PRIMARY KEY,
+    libelle VARCHAR(30) NOT NULL,
+    description TEXT NOT NULL,
+    cd TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- EXPERIENCE
 CREATE TABLE IF NOT EXISTS experience (
     idexperience SERIAL PRIMARY KEY,
     libelle VARCHAR(30) NOT NULL,
+    idtypeposte INT NOT NULL,
     description TEXT NOT NULL,
+    etablissement VARCHAR(60) NOT NULL,
     dtnd DATE NOT NULL,
     dtnf DATE NOT NULL,
-    idutilisateur INT NOT NULL,
-    FOREIGN KEY (idutilisateur) REFERENCES utilisateur(idutilisateur)
+    idutilisateur INT NOT NULL, 
+    FOREIGN KEY (idutilisateur) REFERENCES utilisateur(idutilisateur),
+    FOREIGN KEY (idtypeposte) REFERENCES typeposte(idtypeposte)
 );
 
 -- TECHNOLOGIE
@@ -102,6 +113,7 @@ CREATE TABLE IF NOT EXISTS projet (
     realisation INT NOT NULL,
     nbdev INT NOT NULL,
     idutilisateur INT NOT NULL,
+    etat INT NOT NULL,
     cd TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idutilisateur) REFERENCES utilisateur(idutilisateur)
 );
